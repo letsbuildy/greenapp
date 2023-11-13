@@ -33,7 +33,7 @@ class greenspace(toga.App):
 
         button = toga.Button(
             "Login",
-            on_press=self.say_hello,
+            on_press=self.login,
             style=Pack(padding=(10,75,5,165))
         )
 
@@ -45,14 +45,32 @@ class greenspace(toga.App):
         main_box.add(password_box)
         main_box.add(button)
 
-        self.main_window = toga.MainWindow(title=self.formal_name)
+        self.main_window = toga.MainWindow()
         self.main_window.content = main_box
         self.main_window.show()
+        
 
-    def say_hello(self, widget):
-        print(f"Username, {self.username_input.value}")
-        print(f"Password, {self.password_input.value}")
+    def login(self,widget):
+        main_box = toga.Box(style=Pack(direction=COLUMN,alignment="center"))
+        duration_label = toga.Label(
+            "Pump duration(sec)",
+            style=Pack(padding=(5,30,0,0))
+        )
+        duration = toga.NumberInput(style=Pack(flex=1),min=1,max=999,step=1)
+        
+        duration_box = toga.Box(style=Pack(direction=ROW, padding=(100,30,10,40)))
+        duration_box.add(duration_label)
+        duration_box.add(duration)
+        
+        button = toga.Button(
+            "Run pump",
+            style=Pack(padding=(10,30,5,40))
+        )
 
+        main_box.add(duration_box)
+        main_box.add(button)
+        self.main_window.content = main_box
+        self.main_window.show()
 
 def main():
     return greenspace()
